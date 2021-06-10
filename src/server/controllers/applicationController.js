@@ -2,6 +2,7 @@ const models = require('../models/applicationsModel');
 
 const applicationController = {};
 const { Application } = models;
+
 applicationController.getApplication = async (req, res, next) => {
   console.log(Application);
   try {
@@ -10,9 +11,23 @@ applicationController.getApplication = async (req, res, next) => {
     return next();
   } catch (err) {
     return next({
-      log: `applicationController.getApplications: ERROR: E${err}`,
+      log: `applicationController.getApplications: ERROR: ${err}`,
       message: {
-        err: `Error occurred in applicationController.getApplication. Check server logs for more information.`,
+        err: 'Error occurred while retrieving applications. Check server logs for more information.',
+      },
+    });
+  }
+};
+
+applicationController.addApplication = (req, res, next) => {
+  try {
+    Application.create(req.body);
+    return next();
+  } catch (err) {
+    return next({
+      log: `applicationController.addApplications: ERROR: ${err}`,
+      message: {
+        err: 'Error occurred while adding application. Check server logs for more information.',
       },
     });
   }

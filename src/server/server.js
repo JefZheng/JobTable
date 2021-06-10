@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const apiRouter = require('./routes/api');
 
 dotenv.config();
@@ -25,8 +26,23 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}`);
-});
+const { MONGO_DB_URI } = process.env;
+const { DB_NAME } = process.env;
+
+mongoose
+  .connect(MONGO_DB_URI, {
+    // options for the connect method to parse the URI
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // sets the name of the DB that our collections are part of
+    dbName: DB_NAME,
+  })
+  .then(() => console.log('Connected to Mongo DB.'))
+  .then(() =>
+    app.listen(PORT, () => {
+      console.log(`Server listening on port: ${PORT}`);
+    }),
+  )
+  .catch((err) => console.log(err));
 
 module.exports = app;

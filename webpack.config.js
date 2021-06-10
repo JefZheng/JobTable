@@ -11,6 +11,11 @@ module.exports = {
     publicPath: '/',
     port: 8080,
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/client/index.html',
+    }),
+  ],
   module: {
     rules: [
       {
@@ -30,11 +35,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/client/index.html',
-    }),
-  ],
   resolve: {
     extensions: ['.js', '.jsx'],
   },

@@ -8,6 +8,6 @@ router.get('/', applicationController.getApplication, (req, res) => {
   res.status(200).json(res.locals.applications);
 });
 
-router.post('/createApp', (req, res) => res.status(200).json({}));
+router.post('/addApp', (req, res) => res.status(200).json({}));
 
 module.exports = router;
