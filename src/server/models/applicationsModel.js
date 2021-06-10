@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const MONGO_URI =
-  'mongodb+srv://jefzheng:codesmith@jobtable.i2jvo.mongodb.net/applicationsDB?retryWrites=true&w=majority';
+dotenv.config();
+console.log(process.env.MONGO_DB_URI);
+const { MONGO_DB_URI } = process.env;
+const { DB_NAME } = process.env;
 
 mongoose
-  .connect(MONGO_URI, {
+  .connect(MONGO_DB_URI, {
     // options for the connect method to parse the URI
     useNewUrlParser: true,
     useUnifiedTopology: true,
     // sets the name of the DB that our collections are part of
-    dbName: 'jobtable',
+    dbName: DB_NAME,
   })
   .then(() => console.log('Connected to Mongo DB.'))
   .catch((err) => console.log(err));
