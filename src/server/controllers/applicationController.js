@@ -4,7 +4,6 @@ const applicationController = {};
 const { Application } = models;
 
 applicationController.getApplication = async (req, res, next) => {
-  console.log(Application);
   try {
     const results = await Application.find({});
     res.locals.applications = results;
@@ -21,7 +20,8 @@ applicationController.getApplication = async (req, res, next) => {
 
 applicationController.addApplication = (req, res, next) => {
   try {
-    Application.create(req.body);
+    const { company, location, position, status, stage, remote } = req.body;
+    const results = Application.create({ company, location, position, status, stage, remote });
     return next();
   } catch (err) {
     return next({

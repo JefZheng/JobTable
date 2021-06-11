@@ -5,11 +5,19 @@ module.exports = {
   entry: './src/client/index.js',
   output: {
     filename: 'bundle.js',
+    publicPath: '/',
     path: path.join(__dirname, '/dist'),
   },
   devServer: {
+    historyApiFallback: true,
     publicPath: '/',
     port: 8080,
+    proxy: {
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
